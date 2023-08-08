@@ -1,15 +1,50 @@
 // establish and store events into variables (1st input, 2nd input)
-let inputValue1 = 0;
-let inputValue1changed = false;
-let inputValue2 = 0;
-let inputValue2changed = false;
-let operatorElement = "";
-let result = 0;
+inputValue1 = 0;
+inputValue1changed = false;
+inputValue2 = 0;
+inputValue2changed = false;
+operatorElement = null;
+result = 0;
+
+// operate functionality
+function operate(){
+    if (inputValue2changed == false && inputValue1changed == false){
+        result = inputValue1;
+        console.log(`result is: ${result}`);
+    }
+    else if(inputValue2changed === true){    
+    switch (operatorElement){
+        case "/": 
+            result = Math.round((inputValue1 / inputValue2)*100) / 100;
+            break;
+        case "X":
+            result = inputValue1 * inputValue2;
+            break;
+        case "+":
+            result = inputValue1 + inputValue2;
+            break;
+        case "-":
+            result = inputValue1 - inputValue2;
+            break;
+    }
+    if(result === Infinity || NaN){
+        console.log("How dare you.");
+    }
+
+    console.log(`inputValue1: ${inputValue1}`)
+    console.log(`inputValue1changed: ${inputValue1changed}`);
+    console.log(`operatorElement: ${operatorElement}`);
+    console.log(`inputValue2: ${inputValue2}`);
+    console.log(`inputValue2changed: ${inputValue2changed}`);
+    console.log(`Result: ${inputValue1} ${operatorElement} ${inputValue2} is ${result}`);
+inputValue1 = result;
+inputValue2 = 0;
+operatorElement = null;
+}
+}
 
 // button functionality; eventListener
-// concat values for multiple digits pressed before operator
-// TO-DO: if operator is selected after inputValue2, store initial operation into result
-let operands = document.querySelectorAll(".operand");
+operands = document.querySelectorAll(".operand");
 operands.forEach((e) => e.addEventListener("click", function operand(){
     // if operand is clicked after operator, function will store into inputValue2
     if (inputValue1changed == true){
@@ -29,11 +64,13 @@ operands.forEach((e) => e.addEventListener("click", function operand(){
 }))
 
 // tells calculator inputValue1 has been changed after selecting an operator
-// TO-DO: test logic for inputValue1changed = false, operator selected as first input to calculator
-let operators = document.querySelectorAll(".operator");
+operators = document.querySelectorAll(".operator");
 operators.forEach((e) => e.addEventListener("click", function operator(){
     if (inputValue1changed == false){
         inputValue1changed = true;
+    }
+    else if (inputValue1changed == true && inputValue2changed == true){
+        operate();
     }
     operatorElement = (e.innerText);
     console.log(`operatorElement: ${operatorElement}`);
@@ -42,40 +79,19 @@ operators.forEach((e) => e.addEventListener("click", function operator(){
 
 // clear function
 document.querySelector(".clear-button").addEventListener("click", function clear(){
-    console.log("Insert Clear Function Here");
+    inputValue1 = 0;
+    inputValue1changed = false;
+    inputValue2 = 0;
+    inputValue2changed = false;
+    operatorElement = null;
+    result = 0;
+console.log(inputValue1);
 })
 
-// operate functionality for "="
-// TO-DO: If = is pressed after first input value vs operator
-document.querySelector(".operate").addEventListener("click", function operate(){
-    if(inputValue2changed === true){    
-    switch (operatorElement){
-        case "/": 
-            result = inputValue1 / inputValue2;
-            break;
-        case "X":
-            result = inputValue1 * inputValue2;
-            break;
-        case "+":
-            result = inputValue1 + inputValue2;
-            break;
-        case "-":
-            result = inputValue1 - inputValue2;
-            break;
-    }
 
-    console.log(`inputValue1: ${inputValue1}`)
-    console.log(`inputValue1changed: ${inputValue1changed}`);
-    console.log(`operatorElement: ${operatorElement}`);
-    console.log(`inputValue2: ${inputValue2}`);
-    console.log(`inputValue2changed: ${inputValue2changed}`);
-    console.log(`Result: ${inputValue1} ${operatorElement} ${inputValue2} is ${result}`);
-}
-})
+document.querySelector(".operate").addEventListener("click", operate)
+
+
 // push results to display-screen
 
-// error proofing: 
-// enstablishing correct button order pressing rules
-// divide by 0 response
-// rounding decimals
 
