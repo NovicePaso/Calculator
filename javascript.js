@@ -6,9 +6,14 @@ let operatorElement = null;
 let result = 0;
 let lastInput = null;
 
-
 function operate(){
-    if (inputValue2changed == false && inputValue1changed == false){
+    // response when dividing by 0
+    if (operatorElement == "/" && inputValue2 == 0){
+        clear();
+        document.querySelector(".result-screen").innerText = "How dare you.  I'm resetting now.";
+    }
+    // selecting "=" after an operand
+    else if (inputValue1changed == false){
         result = inputValue1;
         document.querySelector(".input-screen").innerText = inputValue1;
         document.querySelector(".result-screen").innerText = result;
@@ -26,26 +31,15 @@ function operate(){
                 break;
             case "-":
                 result = Math.round((inputValue1 - inputValue2)*100)/100;
-                break;
+                break;     
         }
-
-        console.log(`inputValue1: ${inputValue1}`)
-        console.log(`inputValue1changed: ${inputValue1changed}`);
-        console.log(`operatorElement: ${operatorElement}`);
-        console.log(`inputValue2: ${inputValue2}`);
-        console.log(`inputValue2changed: ${inputValue2changed}`);
         document.querySelector(".result-screen").innerText = result;
         inputValue1 = result;
         inputValue2 = 0;
         inputValue2changed = false;
         operatorElement = null;   
-    }
+    }   
     lastInput = "operate";
-    
-    if(result == Infinity || NaN){
-        clear();
-        document.querySelector(".result-screen").innerText = "How dare you.  I'm resetting now.";
-    }
 }
 
 function clear(){
@@ -56,7 +50,6 @@ function clear(){
     operatorElement = null;
     result = 0;
     lastInput = "clear";
-    console.log(inputValue1);
     document.querySelector(".input-screen").innerText = ' ';
     document.querySelector(".result-screen").innerText = result;
 } 
@@ -69,24 +62,19 @@ operands.forEach((e) => e.addEventListener("click", function operand(){
         inputValue2 = inputValue2 + e.innerText;
         inputValue2 = Number(inputValue2);
         inputValue2changed = true;
-        console.log(`inputValue2: ${inputValue2}`);
-        console.log(`inputValue2changed: ${inputValue2changed}`);
         document.querySelector(".input-screen").innerText = `${inputValue1} ${operatorElement} ${inputValue2}`;
     }
     // if operand is clicked before operator, function will store into inputValue1
     else if (inputValue1changed == false){
             inputValue1 = inputValue1 + e.innerText;
             inputValue1 = Number(inputValue1);
-            console.log(`inputValue1: ${inputValue1}`)
-            console.log(`inputValue1changed: ${inputValue1changed}`);
             document.querySelector(".input-screen").innerText = inputValue1;
     }
+    // resets and starts new calculation after selecting an operand after "="
     if (lastInput == "operate"){
         clear();
         inputValue1 = inputValue1 + e.innerText;
         inputValue1 = Number(inputValue1);
-        console.log(`inputValue1: ${inputValue1}`)
-        console.log(`inputValue1changed: ${inputValue1changed}`);
         document.querySelector(".input-screen").innerText = inputValue1;
     }
     lastInput = "operand";
@@ -107,8 +95,6 @@ operators.forEach((e) => e.addEventListener("click", function operator(){
     operatorElement = (e.innerText);
     lastInput = "operator";
     document.querySelector(".input-screen").innerText = `${inputValue1} ${operatorElement}`;
-    console.log(`operatorElement: ${operatorElement}`);
-    console.log(`inputValue1changed: ${inputValue1changed}`);
 }))
 
 document.querySelector(".operate").addEventListener("click", operate)
