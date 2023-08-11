@@ -10,7 +10,7 @@ function operate(){
     // response when dividing by 0
     if (operatorElement == "/" && inputValue2 == 0){
         clear();
-        document.querySelector(".result-screen").innerText = "How dare you.  I'm resetting now.";
+        document.querySelector(".result-screen").innerText = "How dare you.";        
     }
     // selecting "=" after an operand
     else if (inputValue1changed == false){
@@ -49,6 +49,7 @@ function clear(){
     inputValue2changed = false;
     operatorElement = null;
     result = 0;
+    decimalUsed = false;
     lastInput = "clear";
     document.querySelector(".input-screen").innerText = ' ';
     document.querySelector(".result-screen").innerText = result;
@@ -70,6 +71,7 @@ operands.forEach((e) => e.addEventListener("click", function operand(){
             inputValue1 = Number(inputValue1);
             document.querySelector(".input-screen").innerText = inputValue1;
     }
+ 
     // resets and starts new calculation after selecting an operand after "="
     if (lastInput == "operate"){
         clear();

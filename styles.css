@@ -1,11 +1,73 @@
+h1{
+    font-size: 80px;
+}
+
 div {
     border: solid;
-    background-color: aqua;
+    background-color: aquamarine;
+}
+
+div.header-container{
+    display: flex;
+    flex-direction: row;
 }
 
 main {
-    padding: 25px;
+    padding: 50px;
     background-color: pink;
+    display: flex;
+    flex-direction: column;
+    min-width: 500px;
+    width: 50%;
+    height: 90%;
+    flex: 1;
 }
 
-/* Add flex box */
+div.input-buttons,
+div.display-screen,
+div.clear-button {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+div.display-screen,
+div.clear-button {
+    flex-direction: column;
+}
+
+div.display-screen,
+div.cat-picture {
+    width: 50%;
+    display: flex;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: bottom;
+}
+
+button {
+    height: 90px;
+    width: 110px;
+    padding: 10px;
+    margin: 10px;
+    font-size: 3em;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.header {
+    height: 40px;
+    font-size: 30px;
+}
+
+button.clear{
+    width:auto;
+}
+
+.input-screen, 
+.result-screen {
+    background-color: white;
+}
